@@ -37,13 +37,16 @@ namespace APBDExam.Services
                         throw new ClinicException("Dany pacjent nie istnieje w bazie danych");
                     }
                     dr.Close();
-                    // usun recepty z bazy dla pacjenta o IdPatient
+                    // usun recepty z bazy dla pacjenta o IdPatient (jeśli są)
+                    com.CommandText = "DELETE FROM Prescription WHERE IdPatient = @IdPatient ";
+                    com.Parameters.AddWithValue("IdPatient", IdPatient);
+                    com.ExecuteNonQuery();
 
 
-                    
-
-
-
+                    //USUŃ PACJENTA
+                    com.CommandText = "DELETE FROM Patients WHERE Idpatient = @IdPatient";
+                    com.Parameters.AddWithValue("IdPatient", IdPatient);
+                    return com.ExecuteNonQuery();
 
 
                 }
@@ -54,10 +57,6 @@ namespace APBDExam.Services
                 }
 
 
-
-
-
-                return 0;
             }
         }
 
